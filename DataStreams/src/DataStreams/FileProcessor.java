@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
 public class FileProcessor {
     private Path filePath;
-    //
+
     public void setFilePath(Path filePath) {
         this.filePath = filePath;
     }
@@ -28,7 +29,10 @@ public class FileProcessor {
             throw new IllegalStateException("File path is not set.");
         }
         try (Stream<String> lines = Files.lines(filePath)) {
-            return lines.filter(line -> line.contains(searchString)).collect(Collectors.toList());
+            // Make the search case-insensitive by using toLowerCase
+            String lowerCaseSearch = searchString.toLowerCase();
+            return lines.filter(line -> line.toLowerCase().contains(lowerCaseSearch))
+                        .collect(Collectors.toList());
         }
     }
 }
